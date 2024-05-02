@@ -83,7 +83,7 @@ function mosaicEffect() {
             var r = capture.pixels[index + 0];
             var g = capture.pixels[index + 1];
             var b = capture.pixels[index + 2];
-            var c = color(r, g, b + 50); // 这里加了50的蓝色分量
+            var c = color(r, g, b + 100); // 这里加了50的蓝色分量
             if (mouseX >= x && mouseX < x + mosaicSize && mouseY > y && mouseY < y + mosaicSize) {
                 let img = capture.get(x, y, mosaicSize, mosaicSize);
                 image(img, x, y);
