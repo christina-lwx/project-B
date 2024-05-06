@@ -1,72 +1,32 @@
 let capture;
-
+// colorChannels 是用来表示每个像素在图像中所包含的颜色通道的数量。在一般的图像处理中，通常使用红色（R）、绿色（G）、蓝色（B）三个通道来表示颜色。而在一些图像格式中，还可能包含透明度通道（通常称为 Alpha 通道），用于控制像素的透明度。
+//
+// 在代码中，colorChannels 的值被设置为 4，表示每个像素有四个颜色通道（R、G、B、Alpha）。这是因为 p5.js 使用的图像数据结构中，每个像素都以四个连续的数字表示（R、G、B、Alpha），所以这个参数的作用是帮助正确地从像素数组中提取颜色信息。
+//
+// 如果图像是灰度图像，只有一个颜色通道，那么 colorChannels 可以被设置为 1。在处理不同类型的图像时，这个参数的值可能会有所不同。
 var colorChannels = 4;
 
 let numSegments = 50;//determine how many segments to make
 let segments = [];//where we'll store individual segment
 let drawSegments = true
-var mosaicGrid = [];
-let mosaicSize = 25;
-
-let customCursor1;
-let customCursor2;
-let offsetX,offsetY;
-let offsetX2,offsetY2;
-
-let isPressed =false;
-let song;
-function mousePressed(){
-    isPressed =true;
-    song.loop();
-
-}
-
-function mouseReleased(){
-    isPressed =false;
-    song.stop();
-}
+var mosaicGrid = []; // 二维数组存储马赛克块的颜色信息
+let mosaicSize = 25; // 马赛克块的大小
 function setup() {
-    let canvas = createCanvas(windowWidth, windowHeight);
+    let canvas = createCanvas(800, 600);
     canvas.parent("canvasContainer");
-    song = loadSound("music/bobo.mp3");
-    customCursor1 = createImg('img/cat.gif');
-    customCursor2 = createImg('img/eat.gif');
-    customCursor1.style('width', '50px');
-    customCursor1.style('height', '50px');
-    customCursor2.style('width', '50px');
-    customCursor2.style('height', '50px');
-    customCursor2.position(-200,-200);
-    customCursor1.elt.onload = function() {
-
-        gifWidth = customCursor1.width;
-        gifHeight = customCursor1.height;
-
-        offsetX = gifWidth / 2;
-        offsetY = gifHeight / 2;
-    };
-
-    customCursor2.elt.onload = function() {
-
-        gifWidth2 = customCursor2.width;
-        gifHeight2 = customCursor2.height;
-
-        offsetX2 = gifWidth2 / 2;
-        offsetY2 = gifHeight2 / 2;
-
-    };
 
     capture = createCapture(VIDEO);
-
+    // 设置捕获对象的位置和尺寸
     capture.position(0, 0);
-    capture.size(800, 450);
-
+    capture.size(width, height);
+    // 隐藏默认的视频播放元素
     capture.hide();
 
 
     for (var y = 0; y < capture.height; y += mosaicSize) {
-        mosaicGrid[y / mosaicSize] = [];
+        mosaicGrid[y / mosaicSize] = []; // 创建二维数组的行
         for (var x = 0; x < capture.width; x += mosaicSize) {
-            mosaicGrid[y / mosaicSize][x / mosaicSize] = 0;
+            mosaicGrid[y / mosaicSize][x / mosaicSize] = 0; // 将每个马赛克块的初始颜色设为黑色
         }
     }
 
@@ -77,21 +37,21 @@ function mouseMoved() {
 
     for (var y = 0; y < capture.height; y += mosaicSize) {
         for (var x = 0; x < capture.width; x += mosaicSize) {
-
+            // 检查鼠标是否在当前马赛克块的区域内
             if (mouseX >= x && mouseX < x + mosaicSize && mouseY >= y && mouseY < y + mosaicSize) {
-                mosaicGrid[y / mosaicSize][x / mosaicSize] = 1;
+                mosaicGrid[y / mosaicSize][x / mosaicSize] = 1; // 如果是，将值设为 1
             }
         }
     }
 }
 
-
+// 定义一个自定义的去重函数，根据坐标值进行比较
 function uniqueCoordinates(array) {
     let uniqueArray = [];
-    let uniqueMap = new Map();
+    let uniqueMap = new Map(); // 使用Map对象来存储已经出现过的坐标值
 
     array.forEach(coord => {
-
+        // 将坐标值转换成字符串格式，作为Map对象的键
         let key = coord[0] + '-' + coord[1];
         if (!uniqueMap.has(key)) {
             uniqueArray.push(coord);
@@ -105,37 +65,16 @@ function uniqueCoordinates(array) {
 let coordinatesArray = [];
 
 function draw() {
-    background(0);
-    textAlign(CENTER,CENTER);
-    fill(255);
-    textSize(50);
-    text("When you depressed...",width/2,height/10);
-    rectMode(CENTER);
-    imageMode(CENTER);
-    push();
-    translate(width/2-400,height/2-225);
+
+
     mosaicEffect();
-    pop();
-
-    if(!isPressed){
-        customCursor1.position(mouseX -offsetX, mouseY - offsetY);
-        customCursor2.position(-200,-200);
-    }else{
-        customCursor2.position(mouseX -offsetX2, mouseY - offsetY2);
-        customCursor1.position(-200,-200);
-    }
-
-    fill(255);
-    textSize(20);
-    text("All wiped clean!",width/2,height/2+225+80);
-
 
 
 }
 
 
 function mosaicEffect() {
-    var mosaicSize = 25;
+    var mosaicSize = 25; // 马赛克块的大小
     capture.loadPixels(); //Accessing the pixel array is required to proceed.
 
     for (var y = 0; y < capture.height; y += mosaicSize) {
@@ -144,8 +83,8 @@ function mosaicEffect() {
             var r = capture.pixels[index + 0];
             var g = capture.pixels[index + 1];
             var b = capture.pixels[index + 2];
-            var c = color(r, g, b + 100);
-            if (mouseX-width/2+400 >= x && mouseX-width/2+400 < x + mosaicSize && mouseY-height/2+225 > y && mouseY-height/2+225 < y + mosaicSize) {
+            var c = color(r, g, b + 100); // 这里加了50的蓝色分量
+            if (mouseX >= x && mouseX < x + mosaicSize && mouseY > y && mouseY < y + mosaicSize) {
                 let img = capture.get(x, y, mosaicSize, mosaicSize);
                 image(img, x, y);
                 coordinatesArray.push([x, y]);
