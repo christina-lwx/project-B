@@ -68,8 +68,8 @@ function draw() {
   fill(255);
   textSize(50);
   noStroke();
-  fill(255,0,0);
-  text("When you anxious...", width / 2, height / 10);
+  fill(0);
+  text("When you are anxious...", width / 2, height / 10);
 
 
 

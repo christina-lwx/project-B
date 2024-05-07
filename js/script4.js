@@ -150,8 +150,8 @@ function draw() {
     fill(255);
     textSize(50);
     noStroke();
-    fill(0);
-    text("When you angry...", width / 2, height / 10);
+    fill(255,0,0);
+    text("When you are angry...", width / 2, height / 10);
 
     if(millis()-time>=5000){
 

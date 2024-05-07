@@ -152,7 +152,7 @@ function draw() {
     textAlign(CENTER, CENTER);
     fill(255);
     textSize(50);
-    text("When you depressed...", width / 2, height / 10);
+    text("When you are depressed...", width / 2, height / 10);
 
 
     if (isPlayEnd) {
@@ -179,7 +179,7 @@ function draw() {
     }
 
     fill(255);
-    textSize(20);
+    textSize(30);
     text("All wiped clean!", width / 2, height / 2 + 225 + 80);
 
     push();
