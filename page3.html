@@ -6,10 +6,10 @@
     <title>Custom Layout</title>
     <script src="js/lib/p5.js"></script>
     <script src="js/lib/p5.sound.js"></script>
+    <script src="js/lib/button.js"></script>
     <style>
         body {
             background-color: black;
-            cursor: url('img/cat.gif'), auto;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,10 +18,11 @@
             margin: 0;
             position: relative;
         }
+
         #content {
             text-align: center;
             position: relative;
-            color:white ;
+            color: white;
         }
 
         h1 {
@@ -46,7 +47,6 @@
             right: 0px;
 
 
-
             width: 120px; /* Adjust the width of the button */
             height: 120px; /* Adjust the height of the button */
             border-radius: 50%; /* Make the button circular */
@@ -60,18 +60,11 @@
     </style>
 </head>
 <body>
-<div id="content">
 
-    <div id="canvasContainer"></div>
-    <button id ="button" onclick="goToNewPage()">Jump</button>
 
-    <script>
-        // JavaScript函数，用于页面跳转
-        function goToNewPage() {
-            window.location.href = "index.html";
-        }
-    </script>
-</div>
+<div id="canvasContainer"></div>
+
+
 <script src="js/script3.js"></script>
 
 </body>
