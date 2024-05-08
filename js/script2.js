@@ -21,9 +21,15 @@ let cat2Image;
 function mousePressed() {
     isPressed = true;
     song.loop();
-    nextButton.on_clicked = function () {
-        window.location.href = "page3.html";
-    }
+    // nextButton.on_clicked = function () {
+    //     window.location.href = "page3.html";
+    // }
+    if(    mouseX >= ((width - width / 10 - 50))&&
+    mouseX <= (((width - width / 10 - 50))+width / 10) &&
+    mouseY >= height / 2 &&
+    mouseY <= height / 2+50){
+    window.location.href = "page3.html";
+}
 
 }
 
@@ -110,6 +116,7 @@ function setup() {
         corners:
             [10, 10, 10, 10]
     };
+    mouseCat = new MouseCat(cat2Image);
 }
 
 function mouseMoved() {
@@ -170,7 +177,8 @@ function draw() {
     }
 
     if (!isPressed) {
-        image(cat2Image, mouseX, mouseY, 50, 50);
+
+        mouseCat.disPlay();
         // customCursor1.position(mouseX -offsetX, mouseY - offsetY);
         customCursor2.position(-200, -200);
     } else {
@@ -242,3 +250,21 @@ function windowResized() {
 
     resizeCanvas(windowWidth, windowHeight);
 }
+
+
+class MouseCat{
+
+    constructor(img) {
+        this.img = img;
+
+    }
+
+    disPlay(){
+        image( this.img,mouseX,mouseY,50,50);
+    }
+
+
+
+}
+
+

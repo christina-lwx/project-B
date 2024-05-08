@@ -4,6 +4,7 @@ let isPlay = false;
 let song;
 let font;
 let nextButton;
+let cat;
 
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight);
@@ -30,10 +31,9 @@ function setup() {
             offset_y: 4
         },
         corners: [10, 10, 10, 10],
-        onClick: function () {
-            window.location.href = "page2.html";
-        }
+
     };
+    cat = new Cat();
     background(255);
 }
 
@@ -55,41 +55,50 @@ function draw() {
 }
 
 function mousePressed() {
-    if (
-        mouseX >= width / 2 + width / 6 - 400 &&
-        mouseX <= width / 2 + width / 6 &&
-        mouseY >= height - height / 4 &&
-        mouseY <= height
-    ) {
-        isPlay = true;
-        video.time(0);
-        song.play();
-        video.play();
-    }
-    if (
-        mouseX >= nextButton.x - nextButton.w / 2 &&
-        mouseX <= nextButton.x + nextButton.w / 2 &&
-        mouseY >= nextButton.y - nextButton.h / 2 &&
-        mouseY <= nextButton.y + nextButton.h / 2
-    ) {
-        nextButton.onClick();
-    }
+
+
+    cat.click();
+
+  
+if(    mouseX >= ((width - width / 10 - 50))&&
+    mouseX <= (((width - width / 10 - 50))+width / 10) &&
+    mouseY >= height / 2 &&
+    mouseY <= height / 2+50){
+    window.location.href = "page2.html";
+}
+
+    // nextButton.on_clicked = function () {
+    //     window.location.href = "page2.html";
+    // }
+
 }
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 
-function button(btn) {
-    fill(btn.color);
-    stroke(btn.border_color);
-    strokeWeight(2);
-    rect(btn.x, btn.y, btn.w, btn.h, ...btn.corners);
-    fill(0);
-    noStroke();
-    textAlign(CENTER, CENTER);
-    textSize(btn.text_size);
-    textFont(btn.font);
-    // Adjusting text position based on button dimensions and text size
-    text(btn.text, btn.x + btn.w / 2, btn.y + btn.h / 2); // Centering text wit
+
+class Cat{
+
+
+    constructor() {
+
+    }
+
+
+    click(){
+        if (
+            mouseX >= width / 2 + width / 6 - 400 &&
+            mouseX <= width / 2 + width / 6 &&
+            mouseY >= height - height / 4 &&
+            mouseY <= height
+        ) {
+            isPlay = true;
+            video.time(0);
+            song.play();
+            video.play();
+        }
+    }
+
+
 }

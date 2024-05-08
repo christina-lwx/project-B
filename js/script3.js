@@ -57,6 +57,7 @@ function setup() {
     corners:
         [10, 10, 10, 10]
   };
+  mouseCat = new MouseCat(cat3Image);
 }
 let isPlayMusic=false;
 let pg;
@@ -119,7 +120,8 @@ function draw() {
 
     image(video, width / 2, height / 2, 800, 450);
     motuoCar.position(-200, -200);
-    image(cat3Image,mouseX,mouseY,50,50);
+    mouseCat.disPlay();
+
   }
 
 
@@ -140,12 +142,31 @@ function mousePressed(){
   if(isPlayEnd){
     clickNum+=1;
   }
-  nextButton.on_clicked = function () {
-    window.location.href = "page4.html";
-  }
-
+  // nextButton.on_clicked = function () {
+  //   window.location.href = "page4.html";
+  // }
+  if(    mouseX >= ((width - width / 10 - 50))&&
+  mouseX <= (((width - width / 10 - 50))+width / 10) &&
+  mouseY >= height / 2 &&
+  mouseY <= height / 2+50){
+  window.location.href = "page4.html";
+}
 }
 function windowResized() {
 
   resizeCanvas(windowWidth, windowHeight);
+}
+
+class MouseCat{
+
+  constructor(img) {
+    this.img = img;
+
+  }
+
+  disPlay(){
+    image( this.img,mouseX,mouseY,50,50);
+  }
+
+
 }

@@ -2,7 +2,7 @@
 
 
 
-let cat3Image;
+let cat4Image;
 let backImage;
 
 let mic;
@@ -32,7 +32,7 @@ function setup() {
   video = createVideo("video/pg4.mp4");
   video.hide();
   video.loop();
-  cat3Image = loadImage("img/cat4.png")
+  cat4Image = loadImage("img/cat4.png")
   pg = createGraphics(800, 450);
   background(0);
   backImage = loadImage("img/back4.jpg")
@@ -71,7 +71,7 @@ function setup() {
         [10, 10, 10, 10]
   };
 
-
+  mouseCat = new MouseCat(cat4Image);
 }
 
 let pg;
@@ -89,7 +89,10 @@ function draw() {
     textSize(50);
     noStroke();
     fill(255);
-  text("Your cat love you~", width / 2, height /2);
+    let msg = "Your cat love you.\n"+"Your dog loves you.\n" +
+        "I love you. \n" +
+        "You love yourself."
+  text(msg, width / 2, height /2);
   }else{
     image(video, width / 2, height / 2, width, height);
 
@@ -104,7 +107,7 @@ function draw() {
     rectMode(CENTER);
 
 
-    image(cat3Image, mouseX, mouseY, 100, 100);
+    image(cat4Image, mouseX, mouseY, 100, 100);
 
     push();
     rectMode(CORNER);
@@ -114,7 +117,7 @@ function draw() {
     noFill();
     stroke(255,0,0);
     strokeWeight(10);
-    if(vol>0.8){
+    if(vol>0.2){
       if(isLoud==false){
         isLoud =true;
         song.loop();
@@ -138,7 +141,7 @@ function draw() {
     }
 
 
-    let num =map(vol,0,1,0,20);
+    let num =map(vol,0,0.2,0,20);
     let size = 100;
     for (let i = 0; i <int(num) ; i++) {
 
@@ -178,4 +181,18 @@ function mousePressed(){
 function windowResized() {
 
   resizeCanvas(windowWidth, windowHeight);
+}
+
+class MouseCat{
+
+  constructor(img) {
+    this.img = img;
+
+  }
+
+  disPlay(){
+    image( this.img,mouseX,mouseY,50,50);
+  }
+
+
 }
